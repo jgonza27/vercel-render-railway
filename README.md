@@ -45,7 +45,7 @@ Clonamos el repositorio del profesor en nuestra carpeta de trabajo:
 git clone https://github.com/josejuansanchez/vercel-render.git .
 ```
 
-![Clonación del repositorio](docs/01-git-clone.png)
+![alt text](image.png)
 
 La estructura del proyecto clonado es la siguiente:
 
@@ -108,7 +108,7 @@ DB_PASSWORD=app
 DATABASE_URL=
 ```
 
-![Creación del archivo .env](docs/02-env-file.png)
+![alt text](image-1.png)
 
 ---
 
@@ -125,16 +125,14 @@ Este comando:
 - Descarga la imagen oficial de MySQL 8.3
 - Levanta los 3 contenedores en segundo plano
 
-![Docker Compose building](docs/03-docker-compose-build.png)
-
+![alt text](image-2.png)
 Verificamos que los contenedores están ejecutándose:
 
 ```bash
 docker compose ps
 ```
 
-![Docker Compose ps](docs/04-docker-compose-ps.png)
-
+![alt text](image-3.png)
 ---
 
 ## 5. Verificación del funcionamiento local
@@ -143,15 +141,15 @@ docker compose ps
 
 Accedemos al backend en http://localhost:8000 para verificar que responde:
 
-![Backend status](docs/05-backend-status.png)
+![alt text](image-4.png)
 
 Accedemos a la documentación Swagger en http://localhost:8000/docs:
 
-![Swagger docs](docs/06-swagger-docs.png)
+![alt text](image-5.png)
 
 Verificamos que los endpoints devuelven datos de la base de datos MySQL accediendo a http://localhost:8000/api/items:
 
-![API items](docs/07-api-items.png)
+![alt text](image-6.png)
 
 La base de datos se inicializa automáticamente con 3 tareas de ejemplo (seed data):
 - Módulo CI/CD → Completado
@@ -162,7 +160,7 @@ La base de datos se inicializa automáticamente con 3 tareas de ejemplo (seed da
 
 Accedemos al frontend en http://localhost:3000:
 
-![Frontend local](docs/08-frontend-local.png)
+![alt text](image-7.png)
 
 El frontend muestra los datos obtenidos del backend, incluyendo el estado de conexión y la lista de tareas.
 
