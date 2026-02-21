@@ -1,3 +1,4 @@
+from contextlib import asynccontextmanager
 from fastapi import FastAPI, HTTPException, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, ConfigDict
@@ -10,12 +11,6 @@ import logging
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
-
-app = FastAPI(
-    title="API de Demostración Didáctica",
-    description="Backend con FastAPI para la práctica de CI/CD",
-    version="1.0.0"
-)
 
 Base = declarative_base()
 
@@ -92,38 +87,50 @@ def seed_data(db: Session) -> None:
     )
     db.commit()
 
-# Configuración de CORS para permitir peticiones desde el Frontend (Vercel o local)
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],  # En producción, restringir a dominios específicos
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
 
-
-@app.on_event("startup")
-def on_startup() -> None:
+def connect_database() -> None:
     max_retries = 10
-    retry_interval = 5  # segundos
-    
+    retry_interval = 5
+
     for attempt in range(1, max_retries + 1):
         try:
             logger.info(f"Intento {attempt}/{max_retries}: Conectando a la base de datos...")
             Base.metadata.create_all(bind=engine)
             with SessionLocal() as session:
-                # Verificar conexión
                 session.execute(select(1))
                 seed_data(session)
-            logger.info("✓ Conexión a la base de datos exitosa")
+            logger.info("Conexión a la base de datos exitosa")
             break
         except Exception as e:
-            logger.warning(f"✗ Error al conectar (intento {attempt}/{max_retries}): {e}")
+            logger.warning(f"Error al conectar (intento {attempt}/{max_retries}): {e}")
             if attempt == max_retries:
                 logger.error("No se pudo conectar a la base de datos después de múltiples intentos")
                 raise
             logger.info(f"Reintentando en {retry_interval} segundos...")
             time.sleep(retry_interval)
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    connect_database()
+    yield
+
+
+app = FastAPI(
+    title="API de Demostración Didáctica",
+    description="Backend con FastAPI para la práctica de CI/CD",
+    version="1.0.0",
+    lifespan=lifespan,
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 @app.get("/")
 async def root():
