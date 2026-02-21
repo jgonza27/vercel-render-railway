@@ -245,8 +245,12 @@ Seleccionamos el plan **Free** y configuramos la variable `DATABASE_URL` con la 
 
 Hacemos clic en **"Create Web Service"** y esperamos a que se complete el despliegue.
 
+![alt text](image-14.png)
+
 Una vez desplegado, obtenemos la URL del backend, por ejemplo:  
-`https://vercel-render-backend-xxx.onrender.com`
+https://vercel-render-backend-m0q1.onrender.com
+
+![alt text](image-15.png)
 
 ### 7.6. Obtener el Deploy Hook
 
@@ -254,12 +258,14 @@ Una vez desplegado, obtenemos la URL del backend, por ejemplo:
 2. Buscamos la sección **"Deploy Hook"** y copiamos la URL
 
 ---
-
+![alt text](image-16.png)
 ## 8. Despliegue del Frontend en Vercel
 
 ### 8.1. Crear cuenta y vincular GitHub
 
 1. Accedemos a [vercel.com](https://vercel.com) e iniciamos sesión con GitHub
+
+![alt text](image-17.png)
 
 ### 8.2. Importar el proyecto
 
@@ -278,6 +284,9 @@ Configuramos los siguientes parámetros en **Build and Deployment Settings**:
 | **Build Command** | `npm run build` |
 | **Output Directory** | `dist` |
 
+
+![alt text](image-18.png)
+
 ### 8.4. Configurar variables de entorno
 
 En la sección **"Environment Variables"**, añadimos:
@@ -287,6 +296,8 @@ En la sección **"Environment Variables"**, añadimos:
 | `VITE_API_URL` | `https://vercel-render-backend-xxx.onrender.com` (URL del backend en Render) |
 
 ### 8.5. Despliegue
+
+![alt text](image-19.png)
 
 Hacemos clic en **"Deploy"** y esperamos a que termine.
 
@@ -300,6 +311,14 @@ Una vez desplegado, obtenemos la URL del frontend, por ejemplo:
 3. Nombre: `GitHub CI/CD`
 4. Scope: **Full Account**
 5. Copiamos el token generado
+
+![alt text](image-20.png)
+
+![alt text](image-21.png)
+
+![alt text](image-22.png)
+
+![alt text](image-23.png)
 
 ---
 
