@@ -245,7 +245,7 @@ Seleccionamos el plan **Free** y configuramos la variable `DATABASE_URL` con la 
 
 Hacemos clic en **"Create Web Service"** y esperamos a que se complete el despliegue.
 
-![Despliegue del backend completado en Render con estado Live](img/image-14.png)
+![Logs del despliegue en Render mostrando conexión exitosa a la base de datos y estado Live](img/image-14.png)
 
 Una vez desplegado, obtenemos la URL del backend:  
 `https://vercel-render-backend-m0q1.onrender.com`
@@ -265,12 +265,12 @@ Una vez desplegado, obtenemos la URL del backend:
 
 1. Accedemos a [vercel.com](https://vercel.com) e iniciamos sesión con GitHub
 
-![Página de nuevo proyecto en Vercel con opción de importar repositorio Git](img/image-17.png)
-
 ### 8.2. Importar el proyecto
 
 1. Hacemos clic en **"Add New"** → **"Project"**
 2. Seleccionamos nuestro repositorio y hacemos clic en **"Import"**
+
+![Página de Vercel para importar un repositorio Git](img/image-17.png)
 
 ### 8.3. Configurar el proyecto
 
@@ -292,7 +292,7 @@ En la sección **"Environment Variables"**, añadimos:
 |---|---|
 | `VITE_API_URL` | `https://vercel-render-backend-m0q1.onrender.com` |
 
-![Configuración del proyecto en Vercel con Vite, root directory y variable VITE_API_URL](img/image-18.png)
+![Configuración del proyecto en Vercel: nombre, root directory (frontend), preset Vite y variable de entorno VITE_API_URL](img/image-18.png)
 
 ### 8.5. Despliegue
 
