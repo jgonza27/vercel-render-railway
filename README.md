@@ -175,7 +175,9 @@ Para producción, necesitamos una base de datos MySQL accesible desde internet. 
 1. Accedemos a [railway.com](https://railway.com) y creamos una cuenta (o iniciamos sesión con GitHub)
 2. Hacemos clic en **"New Project"**
 
-![Railway new project](docs/09-railway-new-project.png)
+![alt text](image-8.png)
+![alt text](image-9.png)
+![alt text](image-10.png)
 
 ### 6.2. Añadir servicio MySQL
 
