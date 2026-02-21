@@ -245,27 +245,27 @@ Seleccionamos el plan **Free** y configuramos la variable `DATABASE_URL` con la 
 
 Hacemos clic en **"Create Web Service"** y esperamos a que se complete el despliegue.
 
-![alt text](image-14.png)
+![Despliegue del backend completado en Render con estado Live](image-14.png)
 
-Una vez desplegado, obtenemos la URL del backend, por ejemplo:  
-https://vercel-render-backend-m0q1.onrender.com
-
-![alt text](image-15.png)
+Una vez desplegado, obtenemos la URL del backend:  
+`https://vercel-render-backend-m0q1.onrender.com`
 
 ### 7.6. Obtener el Deploy Hook
 
 1. En el dashboard de Render, vamos a nuestro servicio → **Settings**
 2. Buscamos la sección **"Deploy Hook"** y copiamos la URL
 
+![Configuración de Render mostrando el Deploy Hook URL](image-16.png)
+
 ---
-![alt text](image-16.png)
+
 ## 8. Despliegue del Frontend en Vercel
 
 ### 8.1. Crear cuenta y vincular GitHub
 
 1. Accedemos a [vercel.com](https://vercel.com) e iniciamos sesión con GitHub
 
-![alt text](image-17.png)
+![Página de nuevo proyecto en Vercel con opción de importar repositorio Git](image-17.png)
 
 ### 8.2. Importar el proyecto
 
@@ -278,14 +278,11 @@ Configuramos los siguientes parámetros en **Build and Deployment Settings**:
 
 | Parámetro | Valor |
 |---|---|
-| **Project Name** | `vercel-render-frontend` |
-| **Root Directory** | `./frontend` |
+| **Project Name** | `vercel-render-railway` |
+| **Root Directory** | `frontend` |
 | **Framework Preset** | `Vite` |
 | **Build Command** | `npm run build` |
 | **Output Directory** | `dist` |
-
-
-![alt text](image-18.png)
 
 ### 8.4. Configurar variables de entorno
 
@@ -293,16 +290,18 @@ En la sección **"Environment Variables"**, añadimos:
 
 | Variable | Valor |
 |---|---|
-| `VITE_API_URL` | `https://vercel-render-backend-xxx.onrender.com` (URL del backend en Render) |
+| `VITE_API_URL` | `https://vercel-render-backend-m0q1.onrender.com` |
+
+![Configuración del proyecto en Vercel con Vite, root directory y variable VITE_API_URL](image-18.png)
 
 ### 8.5. Despliegue
 
-![alt text](image-19.png)
-
 Hacemos clic en **"Deploy"** y esperamos a que termine.
 
-Una vez desplegado, obtenemos la URL del frontend, por ejemplo:  
-`https://vercel-render-frontend-xxx.vercel.app`
+![Despliegue completado en Vercel con mensaje Congratulations](image-19.png)
+
+Una vez desplegado, obtenemos la URL del frontend:  
+`https://vercel-render-railway.vercel.app`
 
 ### 8.6. Obtener el Token de Vercel
 
@@ -312,25 +311,9 @@ Una vez desplegado, obtenemos la URL del frontend, por ejemplo:
 4. Scope: **Full Account**
 5. Copiamos el token generado
 
-![alt text](image-20.png)
+![Página de creación de token en Vercel con nombre GitHub CI/CD](image-20.png)
 
-![alt text](image-21.png)
-
-![alt text](image-22.png)
-
-![alt text](image-23.png)
-
-![alt text](image-24.png)
-
-![alt text](image-25.png)
-
-![alt text](image-26.png)
-
-![alt text](image-27.png)
-
-![alt text](image-28.png)
-
-![alt text](image-29.png)
+![Token de Vercel generado correctamente](image-21.png)
 
 ---
 
@@ -344,6 +327,10 @@ Vamos a nuestro repositorio en GitHub → **Settings** → **Secrets and variabl
 |---|---|
 | `RENDER_DEPLOY_HOOK` | URL del Deploy Hook de Render (paso 7.6) |
 | `VERCEL_TOKEN` | Token de Vercel (paso 8.6) |
+
+![Creación del secret RENDER_DEPLOY_HOOK en GitHub](image-22.png)
+
+![Secrets RENDER_DEPLOY_HOOK y VERCEL_TOKEN configurados en GitHub](image-23.png)
 
 ### 9.2. Workflows de GitHub Actions
 
@@ -401,15 +388,17 @@ jobs:
 
 ### 9.3. Verificar CI/CD
 
-Para probar que el CI/CD funciona, realizamos un cambio y hacemos push:
+Para probar que el CI/CD funciona, realizamos un cambio en el frontend y hacemos push:
 
 ```bash
 git add .
-git commit -m "Test CI/CD deployment"
+git commit -m "ci: trigger frontend deploy workflow"
 git push origin main
 ```
 
-Verificamos en GitHub → **Actions** que los workflows se ejecutan correctamente.
+Verificamos en GitHub → **Actions** que el workflow se ejecuta correctamente:
+
+![Workflow Deploy Frontend to Vercel ejecutado con éxito en GitHub Actions](image-24.png)
 
 ---
 
@@ -417,13 +406,19 @@ Verificamos en GitHub → **Actions** que los workflows se ejecutan correctament
 
 ### 10.1. Backend en Render
 
-Accedemos a la URL del backend en Render y comprobamos que responde.
+Accedemos a la URL del backend en Render (`https://vercel-render-backend-m0q1.onrender.com`) y comprobamos que responde con status `online`:
 
-Accedemos a `/api/items` para verificar que la base de datos funciona.
+![Backend en producción respondiendo con status online](image-25.png)
+
+Accedemos a `/api/items` para verificar que la conexión con la base de datos de Railway funciona correctamente:
+
+![Endpoint /api/items en producción devolviendo los datos de Railway](image-26.png)
 
 ### 10.2. Frontend en Vercel
 
-Accedemos a la URL del frontend en Vercel y comprobamos que carga correctamente y muestra los datos del backend.
+Accedemos a la URL del frontend en Vercel (`https://vercel-render-railway.vercel.app`) y comprobamos que carga correctamente, muestra el estado **Backend Online** y la lista de tareas con los datos del backend:
+
+![Frontend en producción en Vercel mostrando Backend Online y la Todo List con datos](image-27.png)
 
 ---
 
@@ -431,8 +426,8 @@ Accedemos a la URL del frontend en Vercel y comprobamos que carga correctamente 
 
 | Servicio | URL |
 |---|---|
-| **Frontend (Vercel)** | `https://COMPLETAR.vercel.app` |
-| **Backend (Render)** | `https://COMPLETAR.onrender.com` |
+| **Frontend (Vercel)** | `https://vercel-render-railway.vercel.app` |
+| **Backend (Render)** | `https://vercel-render-backend-m0q1.onrender.com` |
 | **Base de datos (Railway)** | (interna, no accesible públicamente) |
 | **Repositorio GitHub** | `https://github.com/jgonza27/vercel-render-railway` |
 
