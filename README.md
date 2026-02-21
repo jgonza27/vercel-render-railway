@@ -45,7 +45,7 @@ Clonamos el repositorio del profesor en nuestra carpeta de trabajo:
 git clone https://github.com/josejuansanchez/vercel-render.git .
 ```
 
-![alt text](image.png)
+![Clonación del repositorio y git log](image.png)
 
 La estructura del proyecto clonado es la siguiente:
 
@@ -108,7 +108,7 @@ DB_PASSWORD=app
 DATABASE_URL=
 ```
 
-![alt text](image-1.png)
+![Archivo .env configurado en VS Code](image-1.png)
 
 ---
 
@@ -125,14 +125,16 @@ Este comando:
 - Descarga la imagen oficial de MySQL 8.3
 - Levanta los 3 contenedores en segundo plano
 
-![alt text](image-2.png)
+![Ejecución de docker compose up --build](image-2.png)
+
 Verificamos que los contenedores están ejecutándose:
 
 ```bash
 docker compose ps
 ```
 
-![alt text](image-3.png)
+![Resultado de docker compose ps mostrando los 3 contenedores](image-3.png)
+
 ---
 
 ## 5. Verificación del funcionamiento local
@@ -141,15 +143,15 @@ docker compose ps
 
 Accedemos al backend en http://localhost:8000 para verificar que responde:
 
-![alt text](image-4.png)
+![Backend respondiendo con status online en localhost:8000](image-4.png)
 
 Accedemos a la documentación Swagger en http://localhost:8000/docs:
 
-![alt text](image-5.png)
+![Documentación Swagger de la API con todos los endpoints](image-5.png)
 
 Verificamos que los endpoints devuelven datos de la base de datos MySQL accediendo a http://localhost:8000/api/items:
 
-![alt text](image-6.png)
+![Endpoint /api/items devolviendo los 3 items de la base de datos](image-6.png)
 
 La base de datos se inicializa automáticamente con 3 tareas de ejemplo (seed data):
 - Módulo CI/CD → Completado
@@ -160,7 +162,7 @@ La base de datos se inicializa automáticamente con 3 tareas de ejemplo (seed da
 
 Accedemos al frontend en http://localhost:3000:
 
-![alt text](image-7.png)
+![Frontend Vue 3 mostrando la Todo List con datos del backend](image-7.png)
 
 El frontend muestra los datos obtenidos del backend, incluyendo el estado de conexión y la lista de tareas.
 
@@ -175,16 +177,14 @@ Para producción, necesitamos una base de datos MySQL accesible desde internet. 
 1. Accedemos a [railway.com](https://railway.com) y creamos una cuenta (o iniciamos sesión con GitHub)
 2. Hacemos clic en **"New Project"**
 
-![alt text](image-8.png)
-![alt text](image-9.png)
-![alt text](image-10.png)
+![Pantalla de nuevo proyecto en Railway con las opciones disponibles](image-8.png)
 
 ### 6.2. Añadir servicio MySQL
 
-1. Seleccionamos **"Add a Service"** → **"Database"** → **"MySQL"**
-2. Railway crea automáticamente la base de datos
+1. Seleccionamos **"Database"** → **"MySQL"**
+2. Railway crea automáticamente la base de datos con todas las variables de conexión
 
-![Railway MySQL service](docs/10-railway-mysql.png)
+![Servicio MySQL creado y online en Railway](image-9.png)
 
 ### 6.3. Obtener la cadena de conexión
 
@@ -192,7 +192,7 @@ Para producción, necesitamos una base de datos MySQL accesible desde internet. 
 2. Vamos a la pestaña **"Variables"**
 3. Copiamos el valor de `MYSQL_PUBLIC_URL`
 
-![Railway connection string](docs/11-railway-connection-string.png)
+![Variables del servicio MySQL con MYSQL_PUBLIC_URL visible](image-10.png)
 
 > **Nota:** La cadena de conexión tiene el formato:  
 > `mysql://user:password@host:port/database`  
@@ -205,17 +205,15 @@ Para producción, necesitamos una base de datos MySQL accesible desde internet. 
 ### 7.1. Crear cuenta y vincular GitHub
 
 1. Accedemos a [render.com](https://render.com) e iniciamos sesión con GitHub
-2. En la configuración de la cuenta, vinculamos nuestra cuenta de GitHub
-
-![alt text](image-11.png)
 
 ### 7.2. Crear Web Service
 
 1. Hacemos clic en **"New +"** → **"Web Service"**
-2. Conectamos nuestro repositorio de GitHub
 
-![alt text](image-12.png)
-![alt text](image-13.png)
+![Selección del tipo de servicio en Render](image-11.png)
+
+2. Conectamos nuestro repositorio de GitHub y seleccionamos `vercel-render-railway`
+
 ### 7.3. Configurar el servicio
 
 Configuramos los siguientes parámetros:
@@ -225,10 +223,11 @@ Configuramos los siguientes parámetros:
 | **Name** | `vercel-render-backend` |
 | **Root Directory** | `./backend` |
 | **Runtime** | `Docker` |
-| **Region** | La más cercana a nosotros |
+| **Branch** | `main` |
+| **Region** | Oregon (US West) |
 | **Plan** | Free |
 
-![Render service config](docs/14-render-config.png)
+![Configuración del Web Service en Render con Docker y root directory](image-12.png)
 
 ### 7.4. Configurar variables de entorno
 
@@ -238,13 +237,13 @@ En la sección **"Environment Variables"** de Render, añadimos:
 |---|---|
 | `DATABASE_URL` | La cadena de conexión de Railway (paso 6.3) |
 
-![Render environment variables](docs/15-render-env-vars.png)
+Seleccionamos el plan **Free** y configuramos la variable `DATABASE_URL` con la cadena de conexión de Railway:
+
+![Plan Free seleccionado y variable DATABASE_URL configurada en Render](image-13.png)
 
 ### 7.5. Despliegue
 
 Hacemos clic en **"Create Web Service"** y esperamos a que se complete el despliegue.
-
-![Render deploy](docs/16-render-deploy.png)
 
 Una vez desplegado, obtenemos la URL del backend, por ejemplo:  
 `https://vercel-render-backend-xxx.onrender.com`
@@ -254,8 +253,6 @@ Una vez desplegado, obtenemos la URL del backend, por ejemplo:
 1. En el dashboard de Render, vamos a nuestro servicio → **Settings**
 2. Buscamos la sección **"Deploy Hook"** y copiamos la URL
 
-![Render deploy hook](docs/17-render-deploy-hook.png)
-
 ---
 
 ## 8. Despliegue del Frontend en Vercel
@@ -264,14 +261,10 @@ Una vez desplegado, obtenemos la URL del backend, por ejemplo:
 
 1. Accedemos a [vercel.com](https://vercel.com) e iniciamos sesión con GitHub
 
-![Vercel login](docs/18-vercel-login.png)
-
 ### 8.2. Importar el proyecto
 
 1. Hacemos clic en **"Add New"** → **"Project"**
 2. Seleccionamos nuestro repositorio y hacemos clic en **"Import"**
-
-![Vercel import project](docs/19-vercel-import.png)
 
 ### 8.3. Configurar el proyecto
 
@@ -285,8 +278,6 @@ Configuramos los siguientes parámetros en **Build and Deployment Settings**:
 | **Build Command** | `npm run build` |
 | **Output Directory** | `dist` |
 
-![Vercel project config](docs/20-vercel-config.png)
-
 ### 8.4. Configurar variables de entorno
 
 En la sección **"Environment Variables"**, añadimos:
@@ -295,13 +286,9 @@ En la sección **"Environment Variables"**, añadimos:
 |---|---|
 | `VITE_API_URL` | `https://vercel-render-backend-xxx.onrender.com` (URL del backend en Render) |
 
-![Vercel environment variables](docs/21-vercel-env-vars.png)
-
 ### 8.5. Despliegue
 
 Hacemos clic en **"Deploy"** y esperamos a que termine.
-
-![Vercel deploy](docs/22-vercel-deploy.png)
 
 Una vez desplegado, obtenemos la URL del frontend, por ejemplo:  
 `https://vercel-render-frontend-xxx.vercel.app`
@@ -313,8 +300,6 @@ Una vez desplegado, obtenemos la URL del frontend, por ejemplo:
 3. Nombre: `GitHub CI/CD`
 4. Scope: **Full Account**
 5. Copiamos el token generado
-
-![Vercel token](docs/23-vercel-token.png)
 
 ---
 
@@ -328,8 +313,6 @@ Vamos a nuestro repositorio en GitHub → **Settings** → **Secrets and variabl
 |---|---|
 | `RENDER_DEPLOY_HOOK` | URL del Deploy Hook de Render (paso 7.6) |
 | `VERCEL_TOKEN` | Token de Vercel (paso 8.6) |
-
-![GitHub Secrets](docs/24-github-secrets.png)
 
 ### 9.2. Workflows de GitHub Actions
 
@@ -395,11 +378,7 @@ git commit -m "Test CI/CD deployment"
 git push origin main
 ```
 
-Verificamos en GitHub → **Actions** que los workflows se ejecutan correctamente:
-
-![GitHub Actions running](docs/25-github-actions.png)
-
-![GitHub Actions success](docs/26-github-actions-success.png)
+Verificamos en GitHub → **Actions** que los workflows se ejecutan correctamente.
 
 ---
 
@@ -407,31 +386,13 @@ Verificamos en GitHub → **Actions** que los workflows se ejecutan correctament
 
 ### 10.1. Backend en Render
 
-Accedemos a la URL del backend en Render y comprobamos que responde:
+Accedemos a la URL del backend en Render y comprobamos que responde.
 
-![Backend en producción](docs/27-backend-produccion.png)
-
-Accedemos a `/api/items` para verificar que la base de datos funciona:
-
-![API items en producción](docs/28-api-items-produccion.png)
+Accedemos a `/api/items` para verificar que la base de datos funciona.
 
 ### 10.2. Frontend en Vercel
 
-Accedemos a la URL del frontend en Vercel y comprobamos que carga correctamente y muestra los datos del backend:
-
-![Frontend en producción](docs/29-frontend-produccion.png)
-
-### 10.3. Dashboard de Render
-
-Verificamos en el dashboard de Render que el servicio está activo:
-
-![Render dashboard](docs/30-render-dashboard.png)
-
-### 10.4. Dashboard de Vercel
-
-Verificamos en el dashboard de Vercel que el despliegue está activo:
-
-![Vercel dashboard](docs/31-vercel-dashboard.png)
+Accedemos a la URL del frontend en Vercel y comprobamos que carga correctamente y muestra los datos del backend.
 
 ---
 
@@ -442,7 +403,7 @@ Verificamos en el dashboard de Vercel que el despliegue está activo:
 | **Frontend (Vercel)** | `https://COMPLETAR.vercel.app` |
 | **Backend (Render)** | `https://COMPLETAR.onrender.com` |
 | **Base de datos (Railway)** | (interna, no accesible públicamente) |
-| **Repositorio GitHub** | `https://github.com/COMPLETAR` |
+| **Repositorio GitHub** | `https://github.com/jgonza27/vercel-render-railway` |
 
 ---
 
