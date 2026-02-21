@@ -207,15 +207,15 @@ Para producción, necesitamos una base de datos MySQL accesible desde internet. 
 1. Accedemos a [render.com](https://render.com) e iniciamos sesión con GitHub
 2. En la configuración de la cuenta, vinculamos nuestra cuenta de GitHub
 
-![Render login GitHub](docs/12-render-login.png)
+![alt text](image-11.png)
 
 ### 7.2. Crear Web Service
 
 1. Hacemos clic en **"New +"** → **"Web Service"**
 2. Conectamos nuestro repositorio de GitHub
 
-![Render new web service](docs/13-render-new-service.png)
-
+![alt text](image-12.png)
+![alt text](image-13.png)
 ### 7.3. Configurar el servicio
 
 Configuramos los siguientes parámetros:
