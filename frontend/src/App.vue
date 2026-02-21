@@ -235,5 +235,5 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-/* Component-specific styles can go here */
+/* Deployed via CI/CD with GitHub Actions */
 </style>
