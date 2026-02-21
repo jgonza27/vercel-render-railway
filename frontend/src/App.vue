@@ -235,5 +235,5 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-/* Deployed via CI/CD with GitHub Actions */
+/* Deployed via CI/CD with GitHub Actions - v2 */
 </style>
