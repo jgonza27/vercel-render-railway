@@ -320,6 +320,8 @@ Una vez desplegado, obtenemos la URL del frontend, por ejemplo:
 
 ![alt text](image-23.png)
 
+![alt text](image-24.png)
+
 ---
 
 ## 9. Configuración de CI/CD con GitHub Actions
